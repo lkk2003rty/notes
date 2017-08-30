@@ -7,6 +7,6 @@
 
 ## Go 系列
 
--[Sync.Map 分析](https://github.com/lkk2003rty/notes/blob/master/go_sync_map.md)
+- [Sync.Map 分析](https://github.com/lkk2003rty/notes/blob/master/go_sync_map.md)
 
 
