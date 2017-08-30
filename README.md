@@ -5,5 +5,8 @@
 - [Redis 版 atoi 分析](https://github.com/lkk2003rty/notes/blob/master/redis_atoi.md)
 - [Redis 模块入门](https://github.com/lkk2003rty/notes/blob/master/module_hello_world.md) 
 
+## Go 系列
+
+-[Sync.Map 分析](https://github.com/lkk2003rty/notes/blob/master/go_sync_map.md)
 
 

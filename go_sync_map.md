@@ -391,7 +391,9 @@ v ----> nil ----> expunged
 这里 v 表示正常的键值对的 value 值。
 
 v -> nil： 只是调用 Delete 操作触发
-nil -> expunged：更新 dirty 标识该值对应的 key 是 read 中有而 dirty 没有
+
+nil -> expunged：更新 dirty 标识该值对应的 key 是 read 中有而 dirty 没有的
+
 expunged -> nil：调用 Store 或者 LoadOrStore 的时候将该键值对写入 dirty，虽然这里是改成了 nil 但是后续操作会把真正的值赋上的。
 
 # 总结
