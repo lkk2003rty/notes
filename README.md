@@ -8,6 +8,7 @@
 ## Go 系列
 
 - [Sync.Map 分析](https://github.com/lkk2003rty/notes/blob/master/go_sync_map.md)
+- [time 定时器分析](https://github.com/lkk2003rty/notes/blob/master/go_time.md)
 - [gofail 分析](https://github.com/lkk2003rty/notes/blob/master/gofail.md)
 
 
