@@ -1,0 +1,195 @@
+digraph Raft {
+    rankdir=LR;
+    edge [fontname = "Verdana", fontsize = 10, color="crimson", style="solid"];
+ 
+    raft [shape="none" label=<<table border="0" cellspacing="0">
+    <tr><td bgcolor="yellow" border="1">raft</td></tr>
+	<tr><td border="1" align="left">id&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;uint64</td></tr>
+	<tr><td border="1" align="left">Term&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;uint64</td></tr>
+	<tr><td border="1" align="left">Vote&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;uint64</td></tr>
+	<tr><td border="1" align="left" port="read_state">readStates&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[]ReadState</td></tr>
+	<tr><td border="1" align="left" port="log">raftLog&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*raftLog</td></tr>
+	<tr><td border="1" align="left">maxInflight&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;int</td></tr>
+	<tr><td border="1" align="left">maxMsgSize&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;uint64</td></tr>
+	<tr><td border="1" align="left" port="prs">prs&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;map[uint64]*Progress</td></tr>
+	<tr><td border="1" align="left" port="learner_prs">learnerPrs&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;map[uint64]*Progress</td></tr>
+	<tr><td border="1" align="left" port="state">state&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;StateType</td></tr>
+	<tr><td border="1" align="left">isLearner&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bool</td></tr>
+	<tr><td border="1" align="left">votes&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;map[uint64]bool</td></tr>
+	<tr><td border="1" align="left">msgs&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[]pb.Message</td></tr>
+	<tr><td border="1" align="left">lead&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;uint64</td></tr>
+	<tr><td border="1" align="left">leadTransferee&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;uint64</td></tr>
+	<tr><td border="1" align="left">pendingConf&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bool</td></tr>
+	<tr><td border="1" align="left" port="read_only">readOnly&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*readOnly</td></tr>
+	<tr><td border="1" align="left">electionElapsed&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;int</td></tr>
+	<tr><td border="1" align="left">heartbeatElapsed&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;int</td></tr>
+	<tr><td border="1" align="left">checkQuorum&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bool</td></tr>
+	<tr><td border="1" align="left">preVote&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bool</td></tr>
+	<tr><td border="1" align="left">heartbeatTimeout&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;int</td></tr>
+	<tr><td border="1" align="left">electionTimeout&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;int</td></tr>
+	<tr><td border="1" align="left">randomizedElectionTimeout&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;int</td></tr>
+	<tr><td border="1" align="left">disableProposalForwarding&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bool</td></tr>
+	<tr><td border="1" align="left">tick&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;func()</td></tr>
+	<tr><td border="1" align="left" port="step_function">step&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;stepFunc</td></tr>
+	<tr><td border="1" align="left">logger&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Logger</td></tr>
+    </table>>];
+
+    raftLog [shape="none" label=<<table border="0" cellspacing="0">
+    <tr><td bgcolor="yellow" border="1" port="head">raftLog</td></tr>
+	<tr><td border="1" align="left" port="storage">storage&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Storage</td></tr>
+	<tr><td border="1" align="left" port="unstable">unstable&nbsp;&nbsp;unstable</td></tr>
+	<tr><td border="1" align="left">committed&nbsp;uint64</td></tr>
+	<tr><td border="1" align="left">applied&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;uint64</td></tr>
+	<tr><td border="1" align="left">logger&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Logger</td></tr>
+    </table>>];
+
+    readOnly [shape="none" label=<<table border="0" cellspacing="0">
+    <tr><td bgcolor="yellow" border="1" port="head">readOnly</td></tr>
+	<tr><td border="1" align="left" port="option">option&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ReadOnlyOption</td></tr>
+	<tr><td border="1" align="left" port="status">pendingReadIndex&nbsp;&nbsp;map[string]*readIndexStatus</td></tr>
+	<tr><td border="1" align="left">readIndexQueue&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[]string</td></tr>
+    </table>>];
+
+    readIndexStatus [shape="none" label=<<table border="0" cellspacing="0">
+    <tr><td bgcolor="yellow" border="1" port="head">readIndexStatus</td></tr>
+	<tr><td border="1" align="left">req&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pb.Message</td></tr>
+	<tr><td border="1" align="left">index&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;uint64</td></tr>
+	<tr><td border="1" align="left">acks&nbsp;map[uint64]struct{}</td></tr>
+    </table>>];
+
+    Progress [shape="none" label=<<table border="0" cellspacing="0">
+    <tr><td bgcolor="yellow" border="1" port="head">Progress</td></tr>
+	<tr><td border="1" align="left">Match&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;uint64</td></tr>
+	<tr><td border="1" align="left">Next&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;uint64</td></tr>
+	<tr><td border="1" align="left" port="state">State&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ProgressStateType</td></tr>
+	<tr><td border="1" align="left">Paused&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bool</td></tr>
+	<tr><td border="1" align="left">PendingSnapshot&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;uint64</td></tr>
+	<tr><td border="1" align="left">RecentActive&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bool</td></tr>
+	<tr><td border="1" align="left">ins&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*inflights</td></tr>
+	<tr><td border="1" align="left">IsLearner&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bool</td></tr>
+    </table>>];
+
+    ProgressStateType [shape="none" label=<<table border="0" cellspacing="0">
+    <tr><td bgcolor="#EE82EE" border="1" port="head">type ProgressStateType uint64</td></tr>
+    <tr><td border="1" align="left">ProgressStateProbe ProgressStateType = iota</td></tr>
+    <tr><td border="1" align="left">ProgressStateReplicate</td></tr>
+    <tr><td border="1" align="left">ProgressStateSnapshot</td></tr>
+    </table>>];
+
+    ReadOnlyOption[shape="none" label=<<table border="0" cellspacing="0">
+    <tr><td bgcolor="#EE82EE" border="1" port="head">type ReadOnlyOption int</td></tr>
+    <tr><td border="1" align="left">ReadOnlySafe ReadOnlyOption = iota</td></tr>
+    <tr><td border="1" align="left">ReadOnlyLeaseBased</td></tr>
+    </table>>];
+
+    StateType[shape="none" label=<<table border="0" cellspacing="0">
+    <tr><td bgcolor="#EE82EE" border="1" port="head">type StateType uint64</td></tr>
+    <tr><td border="1" align="left">StateFollower StateType = iota</td></tr>
+    <tr><td border="1" align="left">StateCandidate</td></tr>
+    <tr><td border="1" align="left">StateLeader</td></tr>
+    <tr><td border="1" align="left">StatePreCandidate</td></tr>
+    <tr><td border="1" align="left">numStates</td></tr>
+    </table>>];
+
+    Storage[shape="none" label=<<table border="0" cellspacing="0">
+    <tr><td bgcolor="#E6E6FA" border="1" port="head">type Storage interface</td></tr>
+    <tr><td border="1" align="left">InitialState() (pb.HardState, pb.ConfState, error)</td></tr>
+    <tr><td border="1" align="left">Entries(lo, hi, maxSize uint64) ([]pb.Entry, error)</td></tr>
+    <tr><td border="1" align="left">Term(i uint64) (uint64, error)</td></tr>
+    <tr><td border="1" align="left">LastIndex() (uint64, error)</td></tr>
+    <tr><td border="1" align="left">FirstIndex() (uint64, error)</td></tr>
+    <tr><td border="1" align="left">Snapshot() (pb.Snapshot, error)</td></tr>
+    </table>>];
+
+    MemoryStorage[shape="none" label=<<table border="0" cellspacing="0">
+    <tr><td bgcolor="yellow" border="1" port="head">MemoryStorage</td></tr>
+    <tr><td border="1" align="left">sync.Mutex</td></tr>
+    <tr><td border="1" align="left">hardState&nbsp;pb.HardState</td></tr>
+    <tr><td border="1" align="left">snapshot&nbsp;&nbsp;&nbsp;pb.Snapshot</td></tr>
+    <tr><td border="1" align="left">ents&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[]pb.Entry</td></tr>
+    </table>>];
+
+    unstable[shape="none" label=<<table border="0" cellspacing="0">
+    <tr><td bgcolor="yellow" border="1" port="head">unstable</td></tr>
+    <tr><td border="1" align="left">snapshot&nbsp;*pb.Snapshot</td></tr>
+    <tr><td border="1" align="left">entries&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[]pb.Entry</td></tr>
+    <tr><td border="1" align="left">offset&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;uint64</td></tr>
+    <tr><td border="1" align="left">logger&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Logger</td></tr>
+    </table>>];
+
+    ReadState[shape="none" label=<<table border="0" cellspacing="0">
+    <tr><td bgcolor="yellow" border="1" port="head">ReadState</td></tr>
+    <tr><td border="1" align="left">Index&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;uint64</td></tr>
+    <tr><td border="1" align="left">RequestCtx&nbsp;[]byte</td></tr>
+    </table>>];
+
+    stepFunc[shape="none" label=<<table border="0" cellspacing="0">
+    <tr><td bgcolor="#FFEFD5" border="1" port="head">type stepFunc func(r *raft, m pb.Message)</td></tr>
+    </table>>];
+
+    stepCandidate[shape="none" label=<<table border="0" cellspacing="0">
+    <tr><td bgcolor="#6495ED" border="1" port="head">stepCandidate</td></tr>
+    </table>>];
+
+    stepFollower[shape="none" label=<<table border="0" cellspacing="0">
+    <tr><td bgcolor="#6495ED" border="1" port="head">stepFollower</td></tr>
+    </table>>];
+
+    stepLeader[shape="none" label=<<table border="0" cellspacing="0">
+    <tr><td bgcolor="#6495ED" border="1" port="head">stepLeader</td></tr>
+    </table>>];
+
+
+    inode [shape="none" label=<<table border="0" cellspacing="0">
+    <tr><td bgcolor="#E6E6FA" border="1" port="head">type Node interface</td></tr>
+    <tr><td border="1" align="left">Tick()</td></tr>
+    <tr><td border="1" align="left">Campaign(ctx context.Context) error</td></tr>
+    <tr><td border="1" align="left">Propose(ctx context.Context, data []byte) error</td></tr>
+    <tr><td border="1" align="left">ProposeConfChange(ctx context.Context, cc pb.ConfChange) error</td></tr>
+    <tr><td border="1" align="left">Step(ctx context.Context, msg pb.Message) error</td></tr>
+    <tr><td border="1" align="left">Ready() &lt;-chan Ready</td></tr>
+    <tr><td border="1" align="left">Advance()</td></tr>
+    <tr><td border="1" align="left">ApplyConfChange(cc pb.ConfChange) *pb.ConfState</td></tr>
+    <tr><td border="1" align="left">TransferLeadership(ctx context.Context, lead, transferee uint64)</td></tr>
+    <tr><td border="1" align="left">ReadIndex(ctx context.Context, rctx []byte) error</td></tr>
+    <tr><td border="1" align="left">Status() Status</td></tr>
+    <tr><td border="1" align="left">ReportUnreachable(id uint64)</td></tr>
+    <tr><td border="1" align="left">ReportSnapshot(id uint64, status SnapshotStatus)</td></tr>
+    <tr><td border="1" align="left">Stop()</td></tr>
+    </table>>];
+
+
+    xnode[shape="none" label=<<table border="0" cellspacing="0">
+    <tr><td bgcolor="yellow" border="1" port="head">node</td></tr>
+
+	<tr><td border="1" align="left">propc&nbsp;&nbsp;&nbsp;&nbsp;   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;chan pb.Message</td></tr>
+	<tr><td border="1" align="left">recvc&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;chan pb.Message</td></tr>
+	<tr><td border="1" align="left">confc&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;chan pb.ConfChange</td></tr>
+	<tr><td border="1" align="left">confstatec&nbsp;&nbsp;&nbsp;&nbsp;chan pb.ConfState</td></tr>
+	<tr><td border="1" align="left">readyc&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;chan Ready</td></tr>
+	<tr><td border="1" align="left">advancec&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;chan struct{}</td></tr>
+	<tr><td border="1" align="left">tickc&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;chan struct{}</td></tr>
+	<tr><td border="1" align="left">done&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;chan struct{}</td></tr>
+	<tr><td border="1" align="left">stop&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;chan struct{}</td></tr>
+	<tr><td border="1" align="left">status&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;chan chan Status</td></tr>
+	<tr><td border="1" align="left">logger&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Logger</td></tr>
+    </table>>];
+
+    raft:log -> raftLog:head;
+    raft:read_only -> readOnly:head;
+    raft:prs -> Progress:head;
+    raft:learner_prs -> Progress:head;
+    raft:state -> StateType:head;
+    raft:read_state -> ReadState:head;
+    raft:step_function -> stepFunc:head;
+    readOnly:status -> readIndexStatus:head;
+    Progress:state -> ProgressStateType:head;
+    readOnly:option -> ReadOnlyOption:head;
+    raftLog:storage -> Storage:head;
+    raftLog:unstable -> unstable:head;
+    MemoryStorage:head -> Storage:head;
+    stepCandidate:head -> stepFunc:head;
+    stepFollower:head -> stepFunc:head;
+    stepLeader:head -> stepFunc:head;
+    xnode:head -> inode:head;
+}

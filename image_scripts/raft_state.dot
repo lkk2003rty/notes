@@ -1,0 +1,17 @@
+digraph USB {
+    edge [fontname = "Verdana", fontsize = 10, color="crimson", style="solid"];
+    StateFollower;
+    StatePreCandidate;
+    StateCandidate;
+    StateLeader;
+    StateFollower -> StateCandidate [style=solid];
+    StateCandidate -> StateLeader [style=solid];
+    StateLeader -> StateFollower [style=solid];
+    StateCandidate -> StateFollower [style=solid];
+    StateCandidate -> StateCandidate [style=solid];
+    StateFollower -> StatePreCandidate [style=dotted];
+    StatePreCandidate -> StateCandidate [style=dotted];
+    StatePreCandidate -> StateFollower [style=dotted];
+}
+
+
