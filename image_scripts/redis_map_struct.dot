@@ -1,0 +1,57 @@
+digraph Dict {
+    rankdir=LR;
+    edge [fontname = "Verdana", fontsize = 10, color="crimson", style="solid"];
+ 
+    dict [shape="none" label=<<table border="0" cellspacing="0">
+    <tr><td bgcolor="yellow" border="1">dict</td></tr>
+	<tr><td border="1" align="left" port="dict_type">dictType&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*type</td></tr>
+	<tr><td border="1" align="left">void&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*privdata</td></tr>
+	<tr><td border="1" align="left" port="dictht">dictht&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ht[2]</td></tr>
+	<tr><td border="1" align="left">long&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;rehashidx</td></tr>
+	<tr><td border="1" align="left">unsigned long&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;iterators</td></tr>
+    </table>>];
+
+    dictType [shape="none" label=<<table border="0" cellspacing="0">
+    <tr><td bgcolor="yellow" border="1" port="head">dictType</td></tr>
+	<tr><td border="1" align="left">uint64_t (*hashFunction)(const void *key)</td></tr>
+	<tr><td border="1" align="left">void *(*keyDup)(void *privdata, const void *key)</td></tr>
+	<tr><td border="1" align="left">void *(*valDup)(void *privdata, const void *obj)</td></tr>
+	<tr><td border="1" align="left">int (*keyCompare)(void *privdata, const void *key1, const void *key2)</td></tr>
+	<tr><td border="1" align="left">void (*keyDestructor)(void *privdata, void *key)</td></tr>
+	<tr><td border="1" align="left">void (*valDestructor)(void *privdata, void *obj)</td></tr>
+    </table>>];
+
+    dictht [shape="none" label=<<table border="0" cellspacing="0">
+    <tr><td bgcolor="yellow" border="1" port="head">dictht</td></tr>
+	<tr><td border="1" align="left" port="dict_entry">dictEntry&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;**table</td></tr>
+	<tr><td border="1" align="left">unsigned long&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size</td></tr>
+	<tr><td border="1" align="left">unsigned long&nbsp;&nbsp;sizemask</td></tr>
+	<tr><td border="1" align="left">unsigned long&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;used</td></tr>
+    </table>>];
+
+    dictEntryArr [shape="none" label=<<table border="0" cellspacing="0">
+    <tr><td bgcolor="yellow" border="1" port="head"></td></tr>
+	<tr><td border="1" align="left" port="element">*dictEntry</td></tr>
+	<tr><td border="1" align="left">*dictEntry</td></tr>
+	<tr><td border="1" align="left">...</td></tr>
+    </table>>];
+
+    dictEntry [shape="none" label=<<table border="0" cellspacing="0">
+    <tr><td bgcolor="yellow" border="1" port="head">dictEntry</td></tr>
+	<tr><td border="1" align="left">void&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*key</td></tr>
+	<tr><td border="1" align="left"><table border="0" cellspacing="0">
+    <tr><td bgcolor="#EE82EE" border="1" port="head">union v</td></tr>
+    <tr><td border="1" align="left">void&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*val</td></tr>
+    <tr><td border="1" align="left">uint64_t&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;u64</td></tr>
+    <tr><td border="1" align="left">int64_t&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;s64</td></tr>
+    <tr><td border="1" align="left">double&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;d</td></tr>
+    </table></td></tr>
+	<tr><td border="1" align="left" port="self">struct dictEntry&nbsp;*next</td></tr>
+    </table>>];
+
+    dict:dict_type -> dictType:head;
+    dict:dictht-> dictht:head;
+    dictht:dict_entry -> dictEntryArr:head;
+    dictEntryArr:element -> dictEntry:head;
+    dictEntry:self -> dictEntry:head;
+}
