@@ -45,13 +45,13 @@ typedef struct dictEntry {
 } dictEntry;
 ```
 
-其中 key 是一个 void 类型的指针，value 也有可能是一个 void 类型的指针，看来还需要深扒下才知道实际上这 void 指针指向的是什么东东。于是开始跟命令处理流程。大概流程是这样的，main 函数调用 initServer。在 initServer 中注册了监听 socket 读事件的处理函数 acceptTcpHandler(server.c:1893)。acceptTcpHandler 调用 acceptCommonHandler，acceptCommonHandler 调用 createClient。在 createClient 中处理了连接 socket 的读事件处理函数 readQueryFromClient(networking.c:82)。readQueryFromClient 读取报文后调用 processInputBuffer 做进一步处理，processInputBuffer 开始分析报文内容了，由于 redis 的报文有两种类型，一种是批量操作的一种是单一操作的需要分别处理(networking.c:1314)，不过无论是哪种处理，redis 都是用下面这样的代码来处理参数的。这里 createObject 函数具体做了啥回头再看。
+其中 key 是一个 void 类型的指针，value 也有可能是一个 void 类型的指针，看来还需要深扒下才知道实际上这 void 指针指向的是什么东东。于是开始跟命令处理流程。大概流程是这样的，main 函数调用 initServer。在 initServer 中注册了监听 socket 读事件的处理函数 acceptTcpHandler(server.c:1893)。acceptTcpHandler 调用 acceptCommonHandler，acceptCommonHandler 调用 createClient。在 createClient 中注册了连接 socket 的读事件处理函数 readQueryFromClient(networking.c:82)。readQueryFromClient 读取报文后调用 processInputBuffer 做进一步处理，processInputBuffer 开始分析报文内容了，由于 redis 的报文有两种类型，一种是批量操作的一种是单一操作的需要分别处理(networking.c:1314)，不过无论是哪种处理，redis 都是用下面这样的代码来处理参数的。这里 createObject 函数具体做了啥回头再看。
 
 ```C
 c->argv[c->argc] = createObject(OBJ_STRING,argv[j]);
 ```
 
-我们继续看 processInputBuffer 函数，解析完报文之后，调用 processCommand 处理这次请求的操作。在 processCommand 中我们就可以发现 freeMemoryIfNeeded 这个执行删除策略的函数，继续往下，可以发现最终调用 call(server.c:2471)去执行具体的操作。在 call 函数中，一句 `c->cmd->proc(c);` 就去干正事了。大概看眼 processCommand 函数就知道它其实就是根据参数去找对应的操作处理函数，然后一顿检查，没问题就调用 call 函数了。简单来说就是下面这两行代码。
+我们继续看 processInputBuffer 函数，解析完报文之后，调用 processCommand 处理这次请求的操作。在 processCommand 中我们就可以发现 freeMemoryIfNeeded 这个执行删除策略的函数，继续往下，可以发现最终调用 call(server.c:2471)去执行具体的操作。在 call 函数中，一句 `c->cmd->proc(c);` 就去干正事了。大概看眼 processCommand 函数就知道它其实就是根据参数去找对应的操作处理函数，然后一顿检查，没问题就调用 call 函数了。简单来说干的事就是下面这两行代码。
 
 ```C
 c->cmd = c->lastcmd = lookupCommand(c->argv[0]->ptr);
@@ -171,7 +171,7 @@ uint8_t LFULogIncr(uint8_t counter) {
 
 背景知识基本都铺陈好了，可以直击核心了。瞄一眼 freeMemoryIfNeeded 可以粗略将其干的事可以总结成下面几步。
 
-1. 是否超限？否啥事不干直接返回。
+1. 使用的内存是否超限？否的话啥事不干直接返回。
 2. 计算超了多少，需要删多大才能满足要求
 3. 根据不同的策略选对键值对出来，如果是 noeviction 那么直接到第 6 步
 4. 删除键值对
@@ -237,7 +237,7 @@ unsigned long long estimateObjectIdleTime(robj *o) {
  *     +----------------+--------+
 ```
 
-再看眼怎么计算 idle 的，由于是 LFU 所以需要降序排列，因此 `idle = 255 - 使用次数`，但是仔细看一下这里使用次数是函数 LFUDecrAndReturn 计算的，它并不是直接把 lru 的低 8 位取出来就完事了。而是做了一步控制。如果直接把低 8 位取出来，那么我们计算的明显就是从 redis 启动以来到现在该键值对的使用次数。而在 LFUDecrAndReturn 函数中，它计算的是最近 server.lfu_decay_time 分钟内该键值对的使用次数。这里同样的 LFUTimeElapsed 处理了溢出的问题。
+再看眼怎么计算 idle 的，由于是 LFU 所以需要降序排列，因此 `idle = 255 - 使用次数`，但是仔细看一下这里使用次数是函数 LFUDecrAndReturn 计算的，它并不是直接把 lru 的低 8 位取出来就完事了。而是做了一步控制。如果直接把低 8 位取出来，那么我们计算的明显就是从 redis 启动以来到现在该键值对的使用次数。而在 LFUDecrAndReturn 函数中，它计算的是最近 server.lfu_decay_time 分钟内该键值对的使用次数。这里 LFUTimeElapsed 函数中处理了溢出的问题。
 
 ```C
 /* If the object decrement time is reached, decrement the LFU counter and
@@ -304,7 +304,7 @@ if (klen > EVPOOL_CACHED_SDS_SIZE) {
 }
 ```
 
-看到了吧，如果 key 的长度不是很长的话，用的是 cached，这样避免了重复分配内存。看来为了省内存不遗余力啊。
+看到了吧，如果 key 的长度不是很长的话，用的是 cached，这样避免了重复分配内存。看来为了省内存作者也是不遗余力啊。
 
 
 
