@@ -5,6 +5,7 @@
 - [Redis 版 atoi 分析](https://github.com/lkk2003rty/notes/blob/master/redis_atoi.md)
 - [Redis 模块入门](https://github.com/lkk2003rty/notes/blob/master/module_hello_world.md) 
 - [Redis dict 实现分析](https://github.com/lkk2003rty/notes/blob/master/redis_dict.md)
+- [Redis 内存删除策略分析](https://github.com/lkk2003rty/notes/blob/master/redis_mmory.md)
 
 ## Go 系列
 
