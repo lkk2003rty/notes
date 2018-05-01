@@ -29,7 +29,7 @@ digraph Raft {
 	<tr><td border="1" align="left">electionTimeout&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;int</td></tr>
 	<tr><td border="1" align="left">randomizedElectionTimeout&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;int</td></tr>
 	<tr><td border="1" align="left">disableProposalForwarding&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bool</td></tr>
-	<tr><td border="1" align="left">tick&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;func()</td></tr>
+	<tr><td border="1" align="left" port="tick_function">tick&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;func()</td></tr>
 	<tr><td border="1" align="left" port="step_function">step&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;stepFunc</td></tr>
 	<tr><td border="1" align="left">logger&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Logger</td></tr>
     </table>>];
@@ -139,6 +139,13 @@ digraph Raft {
     <tr><td bgcolor="#6495ED" border="1" port="head">stepLeader</td></tr>
     </table>>];
 
+    tickElection[shape="none" label=<<table border="0" cellspacing="0">
+    <tr><td bgcolor="#6495ED" border="1" port="head">tickElection</td></tr>
+    </table>>];
+
+    tickHeartbeat[shape="none" label=<<table border="0" cellspacing="0">
+    <tr><td bgcolor="#6495ED" border="1" port="head">tickHeartbeat</td></tr>
+    </table>>];
 
     inode [shape="none" label=<<table border="0" cellspacing="0">
     <tr><td bgcolor="#E6E6FA" border="1" port="head">type Node interface</td></tr>
@@ -181,6 +188,8 @@ digraph Raft {
     raft:learner_prs -> Progress:head;
     raft:state -> StateType:head;
     raft:read_state -> ReadState:head;
+    raft:tick_function -> tickElection:head;
+    raft:tick_function -> tickHeartbeat:head;
     raft:step_function -> stepFunc:head;
     readOnly:status -> readIndexStatus:head;
     Progress:state -> ProgressStateType:head;
