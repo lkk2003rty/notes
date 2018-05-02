@@ -20,39 +20,39 @@ digraph Raft {
 
     MessageType [shape="none" label=<<table border="0" cellspacing="0">
     <tr><td bgcolor="#EE82EE" border="1" port="head">MessageType</td></tr>
-	<tr><td border="1" align="left">MsgHup             = 0</td></tr>
-	<tr><td border="1" align="left">MsgBeat            = 1</td></tr>
-	<tr><td border="1" align="left">MsgProp            = 2</td></tr>
-	<tr><td border="1" align="left">MsgApp             = 3</td></tr>
-	<tr><td border="1" align="left">MsgAppResp         = 4</td></tr>
-	<tr><td border="1" align="left">MsgVote            = 5</td></tr>
-	<tr><td border="1" align="left">MsgVoteResp        = 6</td></tr>
-	<tr><td border="1" align="left">MsgSnap            = 7</td></tr>
-	<tr><td border="1" align="left">MsgHeartbeat       = 8</td></tr>
-	<tr><td border="1" align="left">MsgHeartbeatResp   = 9</td></tr>
-	<tr><td border="1" align="left">MsgUnreachable     = 10</td></tr>
-	<tr><td border="1" align="left">MsgSnapStatus      = 11</td></tr>
-	<tr><td border="1" align="left">MsgCheckQuorum     = 12</td></tr>
-	<tr><td border="1" align="left">MsgTransferLeader  = 13</td></tr>
-	<tr><td border="1" align="left">MsgTimeoutNow      = 14</td></tr>
-	<tr><td border="1" align="left">MsgReadIndex       = 15</td></tr>
-	<tr><td border="1" align="left">MsgReadIndexResp   = 16</td></tr>
-	<tr><td border="1" align="left">MsgPreVote         = 17</td></tr>
-	<tr><td border="1" align="left">MsgPreVoteResp     = 18</td></tr>
+	<tr><td border="1" align="left">MsgHup&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;0</td></tr>
+	<tr><td border="1" align="left">MsgBeat&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;1</td></tr>
+	<tr><td border="1" align="left">MsgProp&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;2</td></tr>
+	<tr><td border="1" align="left">MsgApp&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;3</td></tr>
+	<tr><td border="1" align="left">MsgAppResp&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;4</td></tr>
+	<tr><td border="1" align="left">MsgVote&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;5</td></tr>
+	<tr><td border="1" align="left">MsgVoteResp&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;6</td></tr>
+	<tr><td border="1" align="left">MsgSnap&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;7</td></tr>
+	<tr><td border="1" align="left">MsgHeartbeat&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;8</td></tr>
+	<tr><td border="1" align="left">MsgHeartbeatResp&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;9</td></tr>
+	<tr><td border="1" align="left">MsgUnreachable&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;10</td></tr>
+	<tr><td border="1" align="left">MsgSnapStatus&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;11</td></tr>
+	<tr><td border="1" align="left">MsgCheckQuorum&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;12</td></tr>
+	<tr><td border="1" align="left">MsgTransferLeader&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;13</td></tr>
+	<tr><td border="1" align="left">MsgTimeoutNow&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;14</td></tr>
+	<tr><td border="1" align="left">MsgReadIndex&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;15</td></tr>
+	<tr><td border="1" align="left">MsgReadIndexResp&nbsp;&nbsp;&nbsp;=&nbsp;16</td></tr>
+	<tr><td border="1" align="left">MsgPreVote&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;17</td></tr>
+	<tr><td border="1" align="left">MsgPreVoteResp&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;18</td></tr>
     </table>>];
 
     Entry [shape="none" label=<<table border="0" cellspacing="0">
     <tr><td bgcolor="yellow" border="1" port="head">Entry</td></tr>
-    <tr><td border="1" align="left">Term&nbsp;uint64</td></tr>
-    <tr><td border="1" align="left">Index&nbsp;uint64</td></tr>
-    <tr><td border="1" align="left" port="type">Type&nbsp;EntryType</td></tr>
-    <tr><td border="1" align="left">Data&nbsp;bytes</td></tr>
+    <tr><td border="1" align="left">Term&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;uint64</td></tr>
+    <tr><td border="1" align="left">Index&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;uint64</td></tr>
+    <tr><td border="1" align="left" port="type">Type&nbsp;&nbsp;EntryType</td></tr>
+    <tr><td border="1" align="left">Data&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bytes</td></tr>
     </table>>];
    
     EntryType [shape="none" label=<<table border="0" cellspacing="0">
     <tr><td bgcolor="#EE82EE" border="1" port="head">MessageType</td></tr>
-	<tr><td border="1" align="left">EntryNormal             = 0</td></tr>
-	<tr><td border="1" align="left">EntryConfChange         = 1</td></tr>
+	<tr><td border="1" align="left">EntryNormal&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;0</td></tr>
+	<tr><td border="1" align="left">EntryConfChange&nbsp;=&nbsp;1</td></tr>
     </table>>];
     
     Snapshot [shape="none" label=<<table border="0" cellspacing="0">
@@ -76,18 +76,18 @@ digraph Raft {
 
     ConfChangeType[shape="none" label=<<table border="0" cellspacing="0">
     <tr><td bgcolor="#EE82EE" border="1" port="head">ConfChangeType</td></tr>
-	<tr><td border="1" align="left">ConfChangeAddNode        = 0</td></tr>
-	<tr><td border="1" align="left">ConfChangeRemoveNode     = 1</td></tr>
-	<tr><td border="1" align="left">ConfChangeUpdateNode     = 2</td></tr>
-	<tr><td border="1" align="left">ConfChangeAddLearnerNode = 3</td></tr>
+	<tr><td border="1" align="left">ConfChangeAddNode&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;0</td></tr>
+	<tr><td border="1" align="left">ConfChangeRemoveNode&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;1</td></tr>
+	<tr><td border="1" align="left">ConfChangeUpdateNode&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;2</td></tr>
+	<tr><td border="1" align="left">ConfChangeAddLearnerNode&nbsp;=&nbsp;3</td></tr>
     </table>>];
 
     ConfChange [shape="none" label=<<table border="0" cellspacing="0">
     <tr><td bgcolor="yellow" border="1" port="head">ConfChange</td></tr>
-	<tr><td border="1" align="left">ID&nbsp;uint64</td></tr>
+	<tr><td border="1" align="left">ID&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;uint64</td></tr>
 	<tr><td border="1" align="left" port="type">Type&nbsp;ConfChangeType</td></tr>
-	<tr><td border="1" align="left">NodeID&nbsp;uint64</td></tr>
-	<tr><td border="1" align="left">Context&nbsp;bytes</td></tr>
+	<tr><td border="1" align="left">NodeID&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;uint64</td></tr>
+	<tr><td border="1" align="left">Context&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bytes</td></tr>
     </table>>];
 
     HardState [shape="none" label=<<table border="0" cellspacing="0">
