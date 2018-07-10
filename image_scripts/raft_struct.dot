@@ -65,7 +65,7 @@ digraph Raft {
 	<tr><td border="1" align="left">Paused&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bool</td></tr>
 	<tr><td border="1" align="left">PendingSnapshot&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;uint64</td></tr>
 	<tr><td border="1" align="left">RecentActive&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bool</td></tr>
-	<tr><td border="1" align="left">ins&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*inflights</td></tr>
+	<tr><td border="1" align="left" port="ins">ins&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*inflights</td></tr>
 	<tr><td border="1" align="left">IsLearner&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bool</td></tr>
     </table>>];
 
@@ -74,6 +74,14 @@ digraph Raft {
     <tr><td border="1" align="left">ProgressStateProbe ProgressStateType = iota</td></tr>
     <tr><td border="1" align="left">ProgressStateReplicate</td></tr>
     <tr><td border="1" align="left">ProgressStateSnapshot</td></tr>
+    </table>>];
+
+    inflights [shape="none" label=<<table border="0" cellspacing="0">
+    <tr><td bgcolor="yellow" border="1" port="head">inflights</td></tr>
+	<tr><td border="1" align="left">start&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;int</td></tr>
+	<tr><td border="1" align="left">count&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;int</td></tr>
+	<tr><td border="1" align="left">size&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;int</td></tr>
+	<tr><td border="1" align="left">buffer&nbsp;&nbsp;[]uint64</td></tr>
     </table>>];
 
     ReadOnlyOption[shape="none" label=<<table border="0" cellspacing="0">
@@ -193,6 +201,7 @@ digraph Raft {
     raft:step_function -> stepFunc:head;
     readOnly:status -> readIndexStatus:head;
     Progress:state -> ProgressStateType:head;
+    Progress:ins -> inflights:head;
     readOnly:option -> ReadOnlyOption:head;
     raftLog:storage -> Storage:head;
     raftLog:unstable -> unstable:head;

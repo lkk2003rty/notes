@@ -4,18 +4,18 @@ digraph Raft {
  
     Message [shape="none" label=<<table border="0" cellspacing="0">
     <tr><td bgcolor="yellow" border="1">Message</td></tr>
-    <tr><td border="1" align="left" port="type">type&nbsp;&nbsp;MessageType</td></tr>
-    <tr><td border="1" align="left">to&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;uint64</td></tr>
-    <tr><td border="1" align="left">from&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;uint64</td></tr>
-    <tr><td border="1" align="left">term&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;uint64</td></tr>
-    <tr><td border="1" align="left">logTerm&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;uint64</td></tr>
-    <tr><td border="1" align="left">index&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;uint64</td></tr>
-    <tr><td border="1" align="left" port="entries">entries&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Entry</td></tr>
-    <tr><td border="1" align="left">commit&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;uint64</td></tr>
-    <tr><td border="1" align="left" port="snapshot">snapshot&nbsp;&nbsp;Snapshot</td></tr>
-    <tr><td border="1" align="left">reject&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bool</td></tr>
-    <tr><td border="1" align="left">rejectHint&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;uint64</td></tr>
-    <tr><td border="1" align="left">context&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bytes</td></tr>
+    <tr><td border="1" align="left" port="type">Type&nbsp;&nbsp;MessageType</td></tr>
+    <tr><td border="1" align="left">To&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;uint64</td></tr>
+    <tr><td border="1" align="left">From&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;uint64</td></tr>
+    <tr><td border="1" align="left">Term&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;uint64</td></tr>
+    <tr><td border="1" align="left">LogTerm&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;uint64</td></tr>
+    <tr><td border="1" align="left">Index&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;uint64</td></tr>
+    <tr><td border="1" align="left" port="entries">Entries&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[]Entry</td></tr>
+    <tr><td border="1" align="left">Commit&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;uint64</td></tr>
+    <tr><td border="1" align="left" port="snapshot">Snapshot&nbsp;&nbsp;Snapshot</td></tr>
+    <tr><td border="1" align="left">Reject&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bool</td></tr>
+    <tr><td border="1" align="left">RejectHint&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;uint64</td></tr>
+    <tr><td border="1" align="left">Context&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bytes</td></tr>
     </table>>];
 
     MessageType [shape="none" label=<<table border="0" cellspacing="0">
@@ -57,21 +57,21 @@ digraph Raft {
     
     Snapshot [shape="none" label=<<table border="0" cellspacing="0">
     <tr><td bgcolor="yellow" border="1" port="head">Snapshot</td></tr>
-	<tr><td border="1" align="left">data&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bytes</td></tr>
-	<tr><td border="1" align="left" port="metadata">metadata&nbsp;SnapshotMetadata</td></tr>
+	<tr><td border="1" align="left">Data&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bytes</td></tr>
+	<tr><td border="1" align="left" port="metadata">Metadata&nbsp;SnapshotMetadata</td></tr>
     </table>>];
 
     SnapshotMetadata [shape="none" label=<<table border="0" cellspacing="0">
     <tr><td bgcolor="yellow" border="1" port="head">SnapshotMetadata</td></tr>
-	<tr><td border="1" align="left" port="conf_state">conf_state&nbsp;ConfState</td></tr>
-	<tr><td border="1" align="left">index&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;uint64</td></tr>
-	<tr><td border="1" align="left">term&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;uint64</td></tr>
+	<tr><td border="1" align="left" port="conf_state">ConfState&nbsp;&nbsp;ConfState</td></tr>
+	<tr><td border="1" align="left">Index&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;uint64</td></tr>
+	<tr><td border="1" align="left">Term&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;uint64</td></tr>
     </table>>];
 
     ConfState [shape="none" label=<<table border="0" cellspacing="0">
     <tr><td bgcolor="yellow" border="1" port="head">ConfState</td></tr>
-	<tr><td border="1" align="left">nodes&nbsp;&nbsp;&nbsp;&nbsp;uint64</td></tr>
-	<tr><td border="1" align="left">learners&nbsp;uint64</td></tr>
+	<tr><td border="1" align="left">Nodes&nbsp;&nbsp;&nbsp;&nbsp;[]uint64</td></tr>
+	<tr><td border="1" align="left">Learners&nbsp;[]uint64</td></tr>
     </table>>];
 
     ConfChangeType[shape="none" label=<<table border="0" cellspacing="0">
@@ -92,9 +92,9 @@ digraph Raft {
 
     HardState [shape="none" label=<<table border="0" cellspacing="0">
     <tr><td bgcolor="yellow" border="1" port="head">HardState</td></tr>
-	<tr><td border="1" align="left">term&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;uint64</td></tr>
-	<tr><td border="1" align="left">vote&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;uint64</td></tr>
-	<tr><td border="1" align="left">commit&nbsp;uint64</td></tr>
+	<tr><td border="1" align="left">Term&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;uint64</td></tr>
+	<tr><td border="1" align="left">Vote&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;uint64</td></tr>
+	<tr><td border="1" align="left">Commit&nbsp;uint64</td></tr>
     </table>>];
 
 

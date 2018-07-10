@@ -1,9 +1,9 @@
 digraph USB {
     edge [fontname = "Verdana", fontsize = 10, color="crimson", style="solid"];
-    StateFollower [color=blue];
-    StatePreCandidate;
-    StateCandidate;
-    StateLeader;
+    ProgressStateProbe;
+    ProgressStateReplicate;
+    ProgressStateSnapshot;
+
     StateFollower -> StateCandidate [style=solid];
     StateCandidate -> StateLeader [style=solid];
     StateLeader -> StateFollower [style=solid];
