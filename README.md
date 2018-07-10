@@ -13,4 +13,7 @@
 - [time 定时器分析](https://github.com/lkk2003rty/notes/blob/master/go_time.md)
 - [gofail 分析](https://github.com/lkk2003rty/notes/blob/master/gofail.md)
 
+## raft
+
+- [raft 学习笔记](https://github.com/lkk2003rty/notes/blob/master/raft.md)
 
