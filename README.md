@@ -17,3 +17,7 @@
 
 - [raft 学习笔记](https://github.com/lkk2003rty/notes/blob/master/raft.md)
 
+## misc
+
+- [一致性 hash](https://github.com/lkk2003rty/notes/blob/master/consistent_hash.md)
+
