@@ -104,7 +104,7 @@ if (dictIsRehashing(d)) _dictRehashStep(d);
 
 阅读代码可以发现，dict 结构体的 rehashidx 用于表示当前正在 rehash 的 hash table 的下标，-1 则表示当前没有 rehash 操作。每次 _dictRehashStep 都会将一部分键值对重新 hash 到新的 hash table 上。具体来说，就是 rehashidx 对应的这一链表的所有键值对。
 
-这里需要注意的是，要执行 rehash 的第二步在 redis 中还需要有个条件就是当前没有迭代器在对 hash table 进行遍历。
+这里需要注意的是，要执行 rehash 的第二步在 redis 中还需要有个条件就是当前没有迭代器在对 hash table 进行遍历。这是为什么呢？因为当在后台生成 RDB 或 AOF 文件的时候的会改变 `d->iterators` 的值，这样可以在一定程度上防止不同进程对同一对象的操作。这里需要思考的问题是是在另外一个进程在进行生成 RDB/AOF 文件的时候恰好也在进行 rehash 会怎样。边查看 dictRehash 边仔细分析一下的话就会发现其实并不会互相影响。
 
 ```C
 /* This function performs just a step of rehashing, and only if there are

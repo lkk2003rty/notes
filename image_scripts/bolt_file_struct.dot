@@ -1,0 +1,94 @@
+digraph Bolt {
+    edge [fontname = "Verdana", fontsize = 10, color="crimson", style="solid"];
+ 
+    xpage [shape="none" label=<<table border="0" cellspacing="0">
+    <tr><td bgcolor="yellow" border="1" port="head">page</td></tr>
+    <tr><td border="1" align="left">id&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pgid</td></tr>
+    <tr><td border="1" align="left" port="flag">flags&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;uint16</td></tr>
+    <tr><td border="1" align="left">count&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;uint16</td></tr>
+    <tr><td border="1" align="left">overflow&nbsp;uint32</td></tr>
+    <tr><td border="1" align="left" port="content">ptr&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;uintptr</td></tr>
+    </table>>];
+
+    page_flag [shape="none" label=<<table border="0" cellspacing="0">
+	<tr><td border="1" align="left" port="head">branchPageFlag&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;0x01</td></tr>
+	<tr><td border="1" align="left">leafPageFlag&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;0x02</td></tr>
+	<tr><td border="1" align="left">metaPageFlag&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;0x04</td></tr>
+	<tr><td border="1" align="left">freelistPageFlag&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;0x10</td></tr>
+    </table>>];
+
+    meta [shape="none" label=<<table border="0" cellspacing="0">
+    <tr><td bgcolor="yellow" border="1" port="head">meta</td></tr>
+	<tr><td border="1" align="left">magic&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;uint32</td></tr>
+	<tr><td border="1" align="left">version&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;uint32</td></tr>
+	<tr><td border="1" align="left">pageSize&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;uint32</td></tr>
+	<tr><td border="1" align="left">flags&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;uint32</td></tr>
+	<tr><td border="1" align="left" port="bucket">root&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bucket</td></tr>
+	<tr><td border="1" align="left">freelist&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pgid</td></tr>
+	<tr><td border="1" align="left">pgid&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pgid</td></tr>
+	<tr><td border="1" align="left">txid&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;txid</td></tr>
+	<tr><td border="1" align="left">checksum&nbsp;&nbsp;&nbsp;&nbsp;uint64</td></tr>
+    </table>>];
+
+    bucket [shape="none" label=<<table border="0" cellspacing="0">
+    <tr><td bgcolor="yellow" border="1" port="head">bucket</td></tr>
+	<tr><td border="1" align="left">root&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pgid</td></tr>
+	<tr><td border="1" align="left">sequence&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;uint64</td></tr>
+    </table>>];
+
+    leafPage [shape="none" label=<<table border="0" cellspacing="0">
+	<tr><td border="1" align="left" port="element">leafPageElement</td></tr>
+	<tr><td border="1" align="left">leafPageElement</td></tr>
+	<tr><td border="1" align="left">...</td></tr>
+	<tr><td border="1" align="left" port="key1">key1</td></tr>
+	<tr><td border="1" align="left" port="val1">value1</td></tr>
+	<tr><td border="1" align="left">key2</td></tr>
+	<tr><td border="1" align="left">value2</td></tr>
+	<tr><td border="1" align="left">...</td></tr>
+    </table>>];
+
+    leafPageElement [shape="none" label=<<table border="0" cellspacing="0">
+    <tr><td bgcolor="yellow" border="1" port="head">leafPageElement</td></tr>
+	<tr><td border="1" align="left">flags&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;uint32</td></tr>
+	<tr><td border="1" align="left">pos&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;uint32</td></tr>
+	<tr><td border="1" align="left">ksize&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;uint32</td></tr>
+	<tr><td border="1" align="left">vsize&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;uint32</td></tr>
+    </table>>];
+
+    branchPage [shape="none" label=<<table border="0" cellspacing="0">
+	<tr><td border="1" align="left" port="element">branchPageElement</td></tr>
+	<tr><td border="1" align="left">branchPageElement</td></tr>
+	<tr><td border="1" align="left">...</td></tr>
+	<tr><td border="1" align="left" port="key1">key1</td></tr>
+	<tr><td border="1" align="left">key2</td></tr>
+    </table>>];
+
+    branchPageElement [shape="none" label=<<table border="0" cellspacing="0">
+    <tr><td bgcolor="yellow" border="1" port="head">branchPageElement</td></tr>
+	<tr><td border="1" align="left">pos&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;uint32</td></tr>
+	<tr><td border="1" align="left">ksize&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;uint32</td></tr>
+	<tr><td border="1" align="left">pgid&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pgid</td></tr>
+    </table>>];
+
+    freelistPage [shape="none" label=<<table border="0" cellspacing="0">
+    <tr><td bgcolor="#FFEFD5" border="1" port="head">count</td></tr>
+	<tr><td border="1" align="left">pgid</td></tr>
+	<tr><td border="1" align="left">pgid</td></tr>
+	<tr><td border="1" align="left">pgid</td></tr>
+	<tr><td border="1" align="left">...</td></tr>
+    </table>>];
+
+    xpage:flag -> page_flag:head;
+    xpage:content -> meta:head[label="metaPageFlag"];
+    xpage:content -> leafPage:element[label="leafPageFlag"];
+    xpage:content -> branchPage:element[label="branchPageFlag"];
+    xpage:content -> freelistPage:head[label="freelistPageFlag"];
+    meta:bucket -> bucket:head;
+
+    leafPage:element -> leafPageElement:head;
+    leafPage:element -> leafPage:key1;
+    leafPage:element -> leafPage:val1;
+
+    branchPage:element -> branchPageElement:head;
+    branchPage:element -> branchPage:key1;
+}
