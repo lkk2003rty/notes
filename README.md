@@ -20,4 +20,5 @@
 ## misc
 
 - [一致性 hash](https://github.com/lkk2003rty/notes/blob/master/consistent_hash.md)
+- [boltDB 分析](https://github.com/lkk2003rty/notes/blob/master/boltDB.md)
 
